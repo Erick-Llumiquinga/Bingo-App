@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Iniciar sesión</title>
+        <link rel="icon" type="image/png" href="./assets/logo_app.png">
+        <link rel="stylesheet" type="text/css" href="build/tailwind.css">
+    </head>
+
+    <body class="bg-green-800 h-full text-gray-600 flex flex-col">
+        <div class="h-16 bg-green-700 flex items-center justify-between shadow">
+            <div class="px-4">
+                <a href="index.html" class="text-white text-2xl  flex items-center py-3 rounded hover:bg-gray-400">
+                    <img class="w-10 h-10 text-gray-100 mr-3 items-center" src="./assets/logo_app.png">
+                    BINGO
+                </a>
+            </div>
+        </div>
+
+        <div class="flex">
+            <div class="flex-1 md:mt-1 shadow bg-green-900 ">
+                <div class="bg-green-900 p-10 shadow text-xl text-white">
+                    <h1 class=" flex items-center text-2xl text-white font-serif ml-64 mr-64">INICIAR SESIÓN</h1>
+                </div>
+
+                <form class="bg-white shadow rounded px-8 pt-6 pb-8 mb-4 flex flex-col ml-64 mr-64" action="" method="post">
+                    <div class="mb-4">
+                        <label class="block text-grey-darker text-sm   font-bold mb-2" for="persona_email">Correo Electrónico</label>
+                        <input class="shadow  border rounded w-full py-2 px-3 text-grey-darker" name="persona_email" id="persona_email" type="email" value="@gmail.com" autocomplete="off">
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-grey-darker text-sm  font-bold mb-2" for="persona_clave">Contraseña</label>
+                        <input class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3" name="persona_clave" id="persona_clave" type="password" placeholder="******">
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <button class="bg-green-900 hover:bg-green-600 text-white font-bold py-2 px-4 rounded" type="button" onclick="getDataLogin()">Ingresar</button>
+                        <a class="float-right bg-red-600 hover:bg-green-600 text-white font-bold py-2 px-4 rounded" type="button" href="index.html">Volver</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+
+    <script src="./js/login.js"></script>
+
+</html>

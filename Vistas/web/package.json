@@ -1,0 +1,23 @@
+{
+  "name": "bingo",
+  "version": "0.0.5",
+  "description": "Bingo app work",
+  "main": "index.js",
+  "scripts": {
+    "start": "live-server --open=./public",
+    "build": "postcss css/tailwind.css -o public/build/tailwind.css"
+  },
+  "keywords": [
+    "Bingo",
+    "Javascript",
+    "Tests"
+  ],
+  "author": "Johao Perlaza",
+  "license": "MIT",
+  "dependencies": {
+    "autoprefixer": "^9.7.3",
+    "live-server": "^1.2.1",
+    "postcss-cli": "^6.1.3",
+    "tailwindcss": "^1.1.4"
+  }
+}

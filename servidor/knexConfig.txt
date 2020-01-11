@@ -1,0 +1,23 @@
+-----	CONFIGURACION KNEX	-----
+
+- npm i knex -g
+- npm i -g nodemon
+
+"cors": "^2.8.5",
+
+
+
+
+- knex migrate:rollback
+- knex migrate:latest		(migrar tablas)
+
+
+--	Crear archivo de tablas
+
+- knex migrate:make create_database_tables
+
+
+--	Crear y enviar archivos (semillas)
+
+- knex seed:make "nombre_de_semilla"
+- knex seed:run

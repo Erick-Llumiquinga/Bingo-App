@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Bingo Game</title>
+        <link rel="icon" type="image/png" href="./assets/logo_app.png">
+        <link rel="stylesheet" href="./build/tailwind.css">
+        <!-- <link href="//db.onlinewebfonts.com/c/0801c08e5412f54e4b4e9ad146d83a12?family=Ink+Free" rel="stylesheet" type="text/css"/> -->
+        <style>
+            table {
+            border-radius: 5px;
+            }
+
+            #n {
+            background-color: #ecc94b;
+            border-radius: 5px;
+            }
+
+            #n1 {
+            background-color:#b7791f;
+            border-radius: 5px;
+            }
+
+            text{
+                text-decoration-color: black;
+            }
+        </style>
+    </head>
+
+    <body onload="getDataPersona()">
+        <header class="lg:px-16 px-6 bg-gray-700 flex flex-wrap items-center lg:py-0 py-2">
+            <div class="flex-1 flex justify-between items-center">
+                <a href="#">
+                    <svg width="32" height="36" viewBox="0 0 32 36"></svg>
+                </a>
+            </div>
+
+            <label for="menu-toggle" class="pointer-cursor lg:hidden block"><svg class="fill-current text-gray-900" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><title>menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path></svg></label>
+            <input class="hidden" type="checkbox" id="menu-toggle" />
+
+            <div class="hidden lg:flex lg:items-center lg:w-auto w-full" id="menu">
+                <nav>
+                    <ul class="lg:flex items-center justify-between text-base text-gray-700 pt-4 lg:pt-2">
+                    <ul class="text-white" id="persona_nombre"></ul>
+                    <!-- <li><a class="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400" href="#" type="button" class="PDF" onclick="pdf()"><img class="rounded-full w-10 h-10 border-2 border-transparent hover:border-indigo-400" src="./assets/print.png"></a></li> -->
+                    <li><img class="rounded-full w-10 h-10 border-2 border-transparent" src="./assets/user.png"></li>
+                    <li><a class="lg:ml-4 flex items-center justify-start lg:mb-0 mb-4 pointer-cursor" onclick="logout()"><img class="rounded-full w-10 h-10 border-2 border-transparent hover:border-indigo-400" src="./assets/exit.png"></a></li>
+                    <!-- <li><a class="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400" href="#"> <img class="rounded-full w-10 h-10 border-2 border-transparent hover:border-indigo-400" src="" ></a></li> -->
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <div class="flex ">
+            <div class="flex justify-between  text-center  px-4 py-2 m-2">
+                <table class="flex-grow ">
+                    <tr>
+                        <th id="n">B</th>
+                        <th id="n1">I</th>
+                        <th id="n">N</th>
+                        <th id="n1">G</th>
+                        <th id="n">O</th>
+                    </tr>
+
+                    <tr>
+                        <td id="n1" class="border border-gray-400 px-4 py-2">13</td>
+                        <td id="n" class="border border-gray-400 px-4 py-2">20</td>
+                        <td id="n1" class="border border-gray-400 px-4 py-2">35</td>
+                        <td id="n" class="border border-gray-400 px-4 py-2">48</td>
+                        <td id="n1" class="border border-gray-400 px-4 py-2">63</td>
+                    </tr>
+                
+                    <tr>
+                        <td id="n" class="border border-black-400 px-4 py-2">4</td>
+                        <td id="n1" class="border border-black-400 px-4 py-2">26</td>
+                        <td id="n" class="border border-black-400 px-4 py-2"> </td>         <!-- VALOR MEDIO NO LLENAR -->
+                        <td id="n1" class="border border-black-400 px-4 py-2">52</td>
+                        <td id="n" class="border border-black-400 px-4 py-2">81</td>
+                    </tr>
+                
+                    <tr>
+                        <td id="n1" class="border border-black-400 px-4 py-2"> </td>
+                        <td id="n" class="border border-black-400 px-4 py-2">15</td>
+                        <td id="n1" class="border border-black-400 px-4 py-2">39</td>
+                        <td id="n" class="border border-black-400 px-4 py-2">60</td>
+                        <td id="n1" class="border border-black-400 px-4 py-2">95</td>
+                    </tr>
+
+                    <tr>
+                        <td id="n" class="border border-black-400 px-4 py-2"> 41</td>
+                        <td id="n1" class="border border-black-400 px-4 py-2">7</td>
+                        <td id="n" class="border border-black-400 px-4 py-2">89</td>
+                        <td id="n1" class="border border-black-400 px-4 py-2">70</td>                    
+                        <td id="n" class="border border-black-400 px-4 py-2"></td>                        
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </body>
+
+    <script src="./js/home.js"></script>
+</html>
