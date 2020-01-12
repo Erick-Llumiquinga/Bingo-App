@@ -119,18 +119,17 @@ let login = (req,res) =>{
     .then(resultado => {
       resultado.forEach(element => {
         if(element.persona_nombre == usuario && element.persona_clave == clave){
-          return res.status(200).json({
+          res.status(200).json({
             ok: true,
             mensaje: "loggeded"
           })
         }
-        else{
-          return res.status(500).json({
-            ok: false,
-            mensaje: 'inc'
-          })
-        }
       })
+      
+      return res.status(500).json({
+          ok: false,
+          mensaje: 'inc'
+        })
     })
     .catch(error => {
           return res.status(500).json({

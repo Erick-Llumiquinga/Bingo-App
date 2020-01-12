@@ -63,19 +63,6 @@ export default class Home extends Component{
         <View style={styles.body}></View>
       </View>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
                 <TouchableHighlight 
                     onPress={() => {
                         this.setModalVisible(true);

@@ -11,13 +11,13 @@ export default class Login extends Component {
         super(props);
         this.state = {
             fontLoaded: false,
-            correo: '',
+            usuario: '',
             clave: ''
         };
     }
 
-    handleCorreo = text => {
-        this.setState({ correo: text });
+    handleUsuario = text => {
+        this.setState({ usuario: text });
     };
 
     handleClave = text => {
@@ -41,7 +41,7 @@ export default class Login extends Component {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                usuario: this.state.correo,
+                usuario: this.state.usuario,
                 clave: this.state.clave
             })
         }
@@ -51,6 +51,7 @@ export default class Login extends Component {
             .then((responseJson) => {
                 if(responseJson.mensaje != 'inc'){
                     return this.props.navigation.push('Inicio')
+
                 }
                 return alert('Datos Incorrectos')
             })
@@ -58,7 +59,6 @@ export default class Login extends Component {
                 console.error(error);
             })
     }
-
 
     render() {
         return (
