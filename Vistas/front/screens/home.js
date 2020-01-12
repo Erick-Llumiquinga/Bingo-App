@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { StyleSheet, ImageBackground} from 'react-native';
 import {Modal, Text, TouchableHighlight, View, Alert, TextInput} from 'react-native';
-import { Content } from 'native-base';
+import { Content, Button } from 'native-base';
 
 export default class Home extends Component{
 
@@ -128,6 +128,9 @@ export default class Home extends Component{
                                     this.setModalVisible(!this.state.modalVisible);
                                 }}>
                                 <Text>Hide Modal</Text>
+                                <Button onPress={() => {this.props.navigation.push("Login")}}>
+                                    <Text>Salir</Text>
+                                </Button>
                             </TouchableHighlight>
                         </View>
                     </View>       

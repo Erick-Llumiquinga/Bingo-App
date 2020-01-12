@@ -3,7 +3,6 @@ import * as Font from 'expo-font';
 import { StyleSheet, ImageBackground, Text } from 'react-native';
 import { Container, Content, Card, CardItem, Body, Item, Label, Input, Button, AsyncStorage } from 'native-base';
 
-const http = new XMLHttpRequest();
 
 const API_URL = "http:///192.168.100.5:8001/server/bingo";
 
@@ -41,27 +40,41 @@ export default class Register extends Component {
     saveData = () => {
         let tabla = "persona";
 
-        let data = `{
-            "tabla": "${tabla}", 
-            "datos":
+        let data = {
+            tabla: tabla, 
+            datos:
               {
-                "tipo_persona_id": 2,
-                "persona_nombre": "${this.state.nombre}",
-                "persona_email": "${this.state.correo}",
-                "persona_clave": "${this.state.clave}"
+                tipo_persona_id: 2,
+                persona_nombre:  this.state.nombre,
+                persona_email:  this.state.correo,
+                persona_clave: this.state.clave
               }
-        }`;
+        };
 
-        http.open("POST", API_URL, true);
-        http.setRequestHeader("Content-Type", "application/json");
-      
-        if (this.state.nombre == "" || this.state.correo == "" || this.state.clave == "") {
-          alert("Complete todos los datos para continuar...");
-        } else {
-          http.send(data);
-          alert("Se ha registrado correctamente");
-          this.props.navigation.push('Login')
+        let header = {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
         }
+
+        if(this.state.nombre != "" && this.state.correo != "" && this.state.clave != ""){
+            return fetch(API_URL,header)
+            .then((response) => response.json())
+            .then((responseJson) => {
+                if(responseJson.ok != false){
+                    alert('Registro Exitoso')
+                    return this.props.navigation.push('Login')
+                }
+                return alert('Error de servidor')
+            })
+            .catch((error) => {
+                console.error(error);
+            })
+        }
+            return alert("Campos Vacios")
     }
 
     render() {

@@ -3,8 +3,6 @@ import * as Font from 'expo-font';
 import { StyleSheet, ImageBackground, Text, RecyclerViewBackedScrollView } from 'react-native';
 import { Container, Content, Card, CardItem, Body, Item, Label, Input, Button } from 'native-base';
 
-const http = new XMLHttpRequest();
-
 const API_URL = "http://192.168.100.5:8001/server/login";
 
 export default class Login extends Component {
@@ -34,31 +32,6 @@ export default class Login extends Component {
         })
     }
 
-    /*login = () => {
-
-        let data = `{
-            "usuario": "${this.state.correo}",
-            "clave": "${this.state.clave}"
-        }`;
-
-
-        http.open("POST", API_URL, true);
-        http.setRequestHeader("Content-Type", "application/json");
-        http.send(data);
-
-
-        let datos = http.response.mensaje;
-
-        if(datos == 'inc'){
-            alert("Datos incorrectos")
-            this.props.navigation.push('Login');
-        }
-        else{
-            this.props.navigation.push('Inicio');
-        }
-        
-    }*/
-    //Login con fetch
     login = () => {
 
         const header = {
