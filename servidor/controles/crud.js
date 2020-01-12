@@ -149,26 +149,3 @@ module.exports = {
   getDatosbyID,
   login
 };
-
-
-/*
-
-  resultado.forEach(element => {
-              if(element.persona_nombre == usuario){
-                  if(element.persona_clave == clave){
-                      return res.status(200).json({
-                          ok: true
-                      })
-                  }
-                  return res.status(500).json({
-                      ok: false,
-                      mensaje: 'Datos incorrectos'
-                  })
-              }
-          })
-      })
-
-
-
-
-*/
