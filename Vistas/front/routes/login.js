@@ -7,15 +7,28 @@ import Home from '../screens/home';
 
 const screens = {
     Login: {
-        screen: Login
+        screen: Login,
+        navigationOptions: {
+            header: null 
+        },
     },
     Registro: {
-        screen: Registro
+        screen: Registro,
+        navigationOptions: {
+            header: null 
+        },
     },
     Inicio: {
-        screen: Home
-    }
+        screen: Home,
+        navigationOptions: {
+            header: null 
+        },
+    },
 }
+
+
+
 const LoginStack = createStackNavigator(screens);
 
 export default createAppContainer(LoginStack);
+

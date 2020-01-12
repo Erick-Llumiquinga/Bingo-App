@@ -108,25 +108,38 @@ let getDatosbyID = (req, res) => {
     });
 };
 
-let getDatosLogin = (req, res) => {
-  let tabla = req.query.tabla;
+let login = (req,res) =>{
+  let tabla = 'persona';
+  let usuario = req.body.usuario;
+  let clave = req.body.clave;
   let campo = req.query.campo;
+
   db.select(campo)
     .from(tabla)
     .then(resultado => {
-      return res.status(200).json({
-        ok: true,
-        datos: resultado
-      });
+      resultado.forEach(element => {
+        if(element.persona_nombre == usuario && element.persona_clave == clave){
+          return res.status(200).json({
+            ok: true,
+            mensaje: "loggeded"
+          })
+        }
+        else{
+          return res.status(500).json({
+            ok: false,
+            mensaje: 'inc'
+          })
+        }
+      })
     })
     .catch(error => {
-      return res.status(500).json({
-        ok: false,
-        datos: null,
-        mensaje: `Error del servidor: ${error}`
-      });
-    });
-};
+          return res.status(500).json({
+              ok: false,
+              datas: null
+          })
+    })
+
+}
 
 module.exports = {
   getDatos,
@@ -134,5 +147,28 @@ module.exports = {
   updateDatos,
   deleteDatos,
   getDatosbyID,
-  getDatosLogin
+  login
 };
+
+
+/*
+
+  resultado.forEach(element => {
+              if(element.persona_nombre == usuario){
+                  if(element.persona_clave == clave){
+                      return res.status(200).json({
+                          ok: true
+                      })
+                  }
+                  return res.status(500).json({
+                      ok: false,
+                      mensaje: 'Datos incorrectos'
+                  })
+              }
+          })
+      })
+
+
+
+
+*/

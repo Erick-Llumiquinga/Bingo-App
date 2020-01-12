@@ -4,6 +4,7 @@ import {Modal, Text, TouchableHighlight, View, Alert, TextInput} from 'react-nat
 import { Content } from 'native-base';
 
 export default class Home extends Component{
+
     state = {
         modalVisible: false,
     }
@@ -27,6 +28,7 @@ export default class Home extends Component{
         }
 
         return (
+
             <View style={{marginTop: 22}}>
                 <View style={styles.container}>
         <View style={styles.container_principal}>

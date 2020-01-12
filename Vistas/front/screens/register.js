@@ -1,16 +1,34 @@
 import React, { Component } from 'react';
 import * as Font from 'expo-font';
 import { StyleSheet, ImageBackground, Text } from 'react-native';
-import { Container, Content, Card, CardItem, Body, Item, Label, Input, Button } from 'native-base';
+import { Container, Content, Card, CardItem, Body, Item, Label, Input, Button, AsyncStorage } from 'native-base';
 
+const http = new XMLHttpRequest();
+
+const API_URL = "http:///192.168.100.5:8001/server/bingo";
 
 export default class Register extends Component {
     constructor(props){
         super(props);
         this.state = {
             fontLoaded: false,
+            nombre: '',
+            correo: '',
+            clave: ''
         };
     }
+
+    handleNombre = text => {
+        this.setState({ nombre: text });
+    };
+
+    handleCorreo = text => {
+        this.setState({ correo: text });
+    };
+
+    handleClave = text => {
+        this.setState({ clave: text });
+    };
 
     async componentDidMount() {
         await Font.loadAsync({
@@ -18,11 +36,36 @@ export default class Register extends Component {
         }).then(() => {
             this.setState({ fontLoaded: true })
         })
-        
     }
+    
+    saveData = () => {
+        let tabla = "persona";
+
+        let data = `{
+            "tabla": "${tabla}", 
+            "datos":
+              {
+                "tipo_persona_id": 2,
+                "persona_nombre": "${this.state.nombre}",
+                "persona_email": "${this.state.correo}",
+                "persona_clave": "${this.state.clave}"
+              }
+        }`;
+
+        http.open("POST", API_URL, true);
+        http.setRequestHeader("Content-Type", "application/json");
+      
+        if (this.state.nombre == "" || this.state.correo == "" || this.state.clave == "") {
+          alert("Complete todos los datos para continuar...");
+        } else {
+          http.send(data);
+          alert("Se ha registrado correctamente");
+          this.props.navigation.push('Login')
+        }
+    }
+
     render() {
         return (
-
             <Container>
                 <ImageBackground source={require('../assets/picks/bingo.png')} style={styles.container}>
 
@@ -33,45 +76,54 @@ export default class Register extends Component {
                          </Text>
                          ) : (<Text style={styles.registrar2}>Loading...</Text>)
                         }
-                        <Card >
+                        <Card style={styles.cardMom}>
                             <CardItem style={styles.card}>
                                 <Body style={styles.input}>
                                     <Item inlineLabel>
                                     {this.state.fontLoaded == true ? (
-                                        <Label style={styles.user1}>Usuario:</Label>
+                                        <Label style={styles.user1}>Nombre:</Label>
                                         ) : (<Text style={styles.user2}>Loading...</Text>)
-                        }
-                                        <Input />
+                                    }
+                                        <Input style={styles.textoBlanco} onChangeText={this.handleNombre} />
                                     </Item>
+
+                                    <Item inlineLabel>
+                                    {this.state.fontLoaded == true ? (
+                                        <Label style={styles.user1}>Correo:</Label>
+                                        ) : (<Text style={styles.user2}>Loading...</Text>)
+                                    }
+                                        <Input style={styles.textoBlanco} onChangeText={this.handleCorreo}/>
+                                    </Item>
+
                                     <Item inlineLabel last>
                                     {this.state.fontLoaded == true ? (
                                         <Label style={styles.clave1}>Clave:</Label>
                                         ) : (<Text style={styles.clave2}>Loading...</Text>)
                                     }
-                                        <Input />
+                                        <Input style={styles.textoBlanco} onChangeText={this.handleClave} secureTextEntry={true}/>
                                     </Item>
-                                    <Button rounded style={styles.btn}>
-                                        <Text style={styles.txt}>Enviar</Text>
+                                    <Button rounded style={styles.btn} onPress={this.saveData}>
+                                        <Text style={styles.txt}>Registrar</Text>
                                     </Button>
-                                
+                                    <Button style={styles.btn2} onPress={() => {this.props.navigation.push('Login')}}>
+                                        <Text style={styles.txt}>Login</Text>
+                                    </Button>
                                 </Body>
                             </CardItem>
                         </Card>
                     </Content>
                 </ImageBackground>
             </Container>
-
         );
     }
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        flexDirection: 'column',
-        width: '100%',
-        justifyContent: 'center'
-
+        width: '105%',
+        height: '100%',
+        position: 'relative',
+        right: '4%',  
     },
     registrar1: {
         flex: 1,
@@ -102,16 +154,19 @@ const styles = StyleSheet.create({
 
 
     },
+    cardMom: {
+        backgroundColor: 'transparent',
+        borderColor: 'transparent',
+        borderRadius: 30
+    },
     card: {
-        backgroundColor: '#013440',
+        backgroundColor: '#01344085',
         paddingBottom: '10%',
-
-
+        borderRadius: 30,
     },
     user1: {
         color: '#EFFBF8',
         fontSize: 25,
-    
         fontFamily: 'bign-font',
 
     },
@@ -140,9 +195,22 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
 
     },
+    btn2: {
+        marginTop: '5%',
+        marginLeft: '25%',
+        backgroundColor: '#BF9D7E',
+        width: '50%',
+        justifyContent: 'center',
+
+    },
     txt: {
         color: 'black',
         fontSize: 15,
+    },
+    textoBlanco: {
+        color: '#ffffff'
     }
 
 });
+
+
