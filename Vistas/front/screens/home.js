@@ -1,10 +1,50 @@
 import React, {Component} from 'react';
 import { StyleSheet, ImageBackground} from 'react-native';
-import {Modal, Text, TouchableHighlight, View, Alert, TextInput} from 'react-native';
-import { Content, Button } from 'native-base';
+import {Modal, Text, TouchableHighlight, View, Alert, TextInput, FlatList} from 'react-native';
+import {  Container, Header, Title, Button, Left, Right, Body, Icon  } from 'native-base';
 
 export default class Home extends Component{
 
+    numerosC1 = [
+        {
+            key: 1
+        },{
+            key: 7
+        },{
+            key: 13
+        },{ 
+            key: 19
+        },{
+            key: 25
+        },{
+            key: 31
+        },{
+            key: 37
+        },{
+            key: 43
+        },{
+            key: 49
+        },{
+            key: 55
+        },{
+            key: 61
+        },{
+            key: 67
+        },{
+            key: 73
+        },{
+            key: 79
+        },{
+            key: 85
+       }
+    ]
+    numerosC2 = [{key: 2},{key: 8},{key: 14},{key: 20},{key: 26},{key: 32},{key: 38},{key: 44},{key: 50},{key: 56},{key: 62},{key: 68},{key: 74},{key: 80},{key: 86}]
+    numerosC3 = [{key: 3},{key: 9},{key: 15},{key: 21},{key: 27},{key: 33},{key: 39},{key: 45},{key: 51},{key: 57},{key: 63},{key: 69},{key: 75},{key: 81},{key: 87}]
+    numerosC4 = [{key: 4},{key: 10},{key: 16},{key: 22},{key: 28},{key: 34},{key: 40},{key: 46},{key: 52},{key: 58},{key: 64},{key: 70},{key: 76},{key: 82},{key: 88}]
+    numerosC5 = [{key: 5},{key: 11},{key: 17},{key: 23},{key: 29},{key: 35},{key: 41},{key: 47},{key: 53},{key: 59},{key: 65},{key: 71},{key: 77},{key: 83},{key: 89}]
+    numerosC6 = [{key: 6},{key: 12},{key: 18},{key: 24},{key: 30},{key: 36},{key: 42},{key: 48},{key: 54},{key: 60},{key: 66},{key: 72},{key: 78},{key: 84},{key: 90}]
+
+ 
     state = {
         modalVisible: false,
     }
@@ -13,23 +53,41 @@ export default class Home extends Component{
         this.setState({modalVisible: visible})
     }
 
+    async componentDidMount() {
+        await Font.loadAsync({
+            'bin-font': require('../assets/fonts/ShadowsIntoLight-Regular.ttf'),
+        }).then(() => {
+            this.setState({ fontLoaded: true })
+        })
+    }
+
     render() {
 
         const numeroColumnas = []
-        const numerosC1 = [1,7,13,19,25,31,37,43,49,55,61,67,73,79,85]
-        const numerosC2 = [2,8,14,20,26,32,38,44,50,56,62,68,74,80,86]
-        const numerosC3 = [3,9,15,21,27,33,39,45,51,57,63,69,75,81,87]
-        const numerosC4 = [4,10,16,22,28,34,40,46,52,58,64,70,76,82,88]
-        const numerosC5 = [5,11,17,23,29,35,41,47,53,59,65,71,77,83,89]
-        const numerosC6 = [6,12,18,24,30,36,42,48,54,60,66,72,78,84,90]
+      
 
         for(let i = 1; i <= 15; i++){
             numeroColumnas.push(i);
         }
 
-        return (
-
+        return (    
             <View style={{marginTop: 22}}>
+            <ImageBackground source={require('../assets/picks/bingo.png')} style={styles.imagen}>
+            <Header>
+                            <Left>
+                                <Button transparent onPress={() => {this.setModalVisible(!this.state.modalVisible)}}>
+                                    <Icon name='arrow-back' />
+                                </Button>
+                            </Left>
+                            <Body>
+                                <Title>Bingo</Title>
+                            </Body>
+                            <Right>
+                                <Button transparent>
+                                    <Icon name='search' />
+                                </Button>
+                            </Right>
+                        </Header>
                 <View style={styles.container}>
         <View style={styles.container_principal}>
           <TextInput
@@ -62,13 +120,15 @@ export default class Home extends Component{
         </View>
         <View style={styles.body}></View>
       </View>
-
-                <TouchableHighlight 
+      <TouchableHighlight 
                     onPress={() => {
                         this.setModalVisible(true);
                     }}>
                     <Text>Show Modal</Text>
                 </TouchableHighlight>
+            </ImageBackground>
+
+                
 
                  <Modal animationType="slide" 
                        transparent={false} 
@@ -79,45 +139,45 @@ export default class Home extends Component{
                     <View style={{marginTop: 22}}>
                         <View>
                         <ImageBackground source={require('../assets/picks/bingo.png')} style={styles.imagen}>
-                            <View style={styles.containerTabla1}>
-                            {
-                                numeroColumnas.map(el => <TextInput style={styles.bola_tabla} value={el} key={el} editable={false} />)
-                            }
+                        <Header style={{backgroundColor: '#20575783'}}>
+                            <Left>
+                                <Button transparent onPress={() => {this.setModalVisible(!this.state.modalVisible)}}>
+                                    <Icon name='arrow-back' />
+                                </Button>
+                            </Left>
+                            <Body>
+                                {
+                                    this.state.fontLoaded == true ? (
+                                        <Text style={styles.input1}>Números Jugados</Text>
+                                    ) : ((<Text style={styles.input1}>Números Jugados</Text>))
+                                }
+                            </Body>
+                        </Header>
+                            <View style={styles.containerTabla1}> 
+                                <FlatList data={this.numerosC1} renderItem={({item}) => <Text style={styles.bola_tabla}>{item.key}</Text>} editable={true}/>
                             </View>    
-                            <View style={styles.containerTabla2}>
-                            {
-                                numeroColumnas.map(el => <TextInput style={styles.bola_tabla} value={el} key={el} editable={false} />)
-                            }
-                            </View>      
-                            <View style={styles.containerTabla3}>
-                            {
-                                numeroColumnas.map(el => <TextInput style={styles.bola_tabla} value={el} key={el} editable={false} />)
-                            }
-                            </View>  
-                            <View style={styles.containerTabla4}>
-                            {
-                                numeroColumnas.map(el => <TextInput style={styles.bola_tabla} value={el} key={el} editable={false} />)
-                            }
+                            <View style={styles.containerTabla2}> 
+                                <FlatList data={this.numerosC2} renderItem={({item}) => <Text style={styles.bola_tabla}>{item.key}</Text>} />
                             </View> 
-                            <View style={styles.containerTabla5}>
-                            {
-                                numeroColumnas.map(el => <TextInput style={styles.bola_tabla} value={el} key={el} editable={false} />)
-                            }
-                            </View>
-                            <View style={styles.containerTabla6}>
-                            {
-                                numeroColumnas.map(el => <TextInput style={styles.bola_tabla} value={el} key={el} editable={false} />)
-                            }
-                            </View>  
+                            <View style={styles.containerTabla3}> 
+                                <FlatList data={this.numerosC3} renderItem={({item}) => <Text style={styles.bola_tabla}>{item.key}</Text>} />
+                            </View> 
+                            <View style={styles.containerTabla4}> 
+                                <FlatList data={this.numerosC4} renderItem={({item}) => <Text style={styles.bola_tabla}>{item.key}</Text>} />
+                            </View> 
+                            <View style={styles.containerTabla5}> 
+                                <FlatList data={this.numerosC5} renderItem={({item}) => <Text style={styles.bola_tabla}>{item.key}</Text>} />
+                            </View> 
+                            <View style={styles.containerTabla6}> 
+                                <FlatList data={this.numerosC6} renderItem={({item}) => <Text style={styles.bola_tabla}>{item.key}</Text>} />
+                            </View> 
+                           
                         </ImageBackground>
                             <TouchableHighlight 
                                 onPress={() => {
                                     this.setModalVisible(!this.state.modalVisible);
                                 }}>
                                 <Text>Hide Modal</Text>
-                                <Button onPress={() => {this.props.navigation.push("Login")}}>
-                                    <Text>Salir</Text>
-                                </Button>
                             </TouchableHighlight>
                         </View>
                     </View>       
@@ -131,38 +191,44 @@ const styles = StyleSheet.create({
     containerTabla1: {
         position: 'absolute',
         left: '5%',
-        height: '100%'
-
+        top: '10%', 
+        height: '100%',    
+        width: '20%'
     },
     containerTabla2: {
         position: 'absolute',
         left: '21%',
-        height: '100%'
-
+        top: '10%', 
+        height: '100%',
+        width: '20%'
     },
     containerTabla3: {
         position: 'absolute',
         left: '37%',
-        height: '100%'
-
+        top: '10%', 
+        height: '100%',
+        width: '20%'
     },
     containerTabla4: {
         position: 'absolute',
         left: '53%',
-        height: '100%'
-
+        top: '10%', 
+        height: '100%',
+        width: '20%'
     },
     containerTabla5: {
         position: 'absolute',
         left: '69%',
-        height: '100%'
-
+        top: '10%', 
+        height: '100%',
+        width: '20%'
     },
     containerTabla6: {
         position: 'absolute',
         left: '85%',
-        height: '100%'
-
+        top: '10%', 
+        height: '100%',
+        width: '20%'
     },
     container: {
         flex: 1,
@@ -233,5 +299,14 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 50
       },
+      textoBlanco: {
+        color: '#ffffff'
+    },
+    input1: {
+        color: '#EFFBF8',
+        fontSize: 25,
+        fontFamily: 'bin-font',
+
+    }
 })
 

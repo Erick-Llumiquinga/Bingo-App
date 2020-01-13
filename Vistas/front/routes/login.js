@@ -9,19 +9,19 @@ const screens = {
     Login: {
         screen: Login,
         navigationOptions: {
-            header: null 
+            headerShown: false 
         },
     },
     Registro: {
         screen: Registro,
         navigationOptions: {
-            header: null 
+            headerShown: false  
         },
     },
     Inicio: {
         screen: Home,
         navigationOptions: {
-            header: null 
+            headerShown: false  
         },
     },
 }

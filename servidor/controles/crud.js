@@ -125,7 +125,6 @@ let login = (req,res) =>{
           })
         }
       })
-      
       return res.status(500).json({
           ok: false,
           mensaje: 'inc'

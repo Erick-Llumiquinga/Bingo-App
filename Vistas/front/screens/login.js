@@ -53,7 +53,7 @@ export default class Login extends Component {
                     return this.props.navigation.push('Inicio')
 
                 }
-                return alert('Datos Incorrectos')
+                return alert(JSON.stringify(responseJson))
             })
             .catch((error) => {
                 console.error(error);
@@ -78,10 +78,10 @@ export default class Login extends Component {
                                 <Body style={styles.input}>
                                     <Item inlineLabel>
                                     {this.state.fontLoaded == true ? (
-                                        <Label style={styles.input1}>Correo:</Label>
+                                        <Label style={styles.input1}>Usuario:</Label>
                                         ) : (<Text style={styles.input2}>Loading...</Text>)
                                     }
-                                        <Input style={styles.textoBlanco} onChangeText={this.handleCorreo}/>
+                                        <Input style={styles.textoBlanco} onChangeText={this.handleUsuario}/>
                                     </Item>
                                     <Item inlineLabel last>
                                     {this.state.fontLoaded == true ? (
@@ -92,7 +92,7 @@ export default class Login extends Component {
                                    
                                     </Item>
                                     
-                                    <Button rounded style={styles.btn} onPress={this.login}>
+                                    <Button rounded style={styles.btn} onPress={() => this.props.navigation.push('Inicio')}>
                                         <Text style={styles.txt} >Ingresar</Text>
                                     </Button>
                                     <Button rounded style={styles.btn2} onPress={() => this.props.navigation.push('Registro')}>
@@ -104,7 +104,6 @@ export default class Login extends Component {
                     </Content>
                 </ImageBackground>
             </Container>
-
         );
     }
 }

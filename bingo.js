@@ -72,3 +72,42 @@ function lanzar() {
     }
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+<View style={styles.containerTabla2}>
+{
+    numeroColumnas.map(el => <TextInput style={styles.bola_tabla} value={el} editable={false} />)
+}
+</View>      
+<View style={styles.containerTabla3}>
+{
+    numeroColumnas.map(el => <TextInput style={styles.bola_tabla} value={el} key={el} editable={false} />)
+}
+</View>  
+<View style={styles.containerTabla4}>
+{
+    numeroColumnas.map(el => <TextInput style={styles.bola_tabla} value={el} key={el} editable={false} />)
+}
+</View> 
+<View style={styles.containerTabla5}>
+{
+    numeroColumnas.map(el => <TextInput style={styles.bola_tabla} value={el} key={el} editable={false} />)
+}
+</View>
+<View style={styles.containerTabla6}>
+{
+    numeroColumnas.map(el => <TextInput style={styles.bola_tabla} value={el} key={el} editable={false} />)
+}
+</View>  
+
+
+<FlatList style={styles.containerTabla1} data={this.numerosC1} renderItem={({item}) => <Text>{item.key}</Text>} />
