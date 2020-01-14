@@ -3,18 +3,14 @@ import { Image, Modal, Text, TouchableHighlight, View, Alert, TextInput, FlatLis
 import {  Container, Header, Title, Button, Left, Right, Body, Icon  } from 'native-base';
 import { Table, Row, Rows } from 'react-native-table-component';
 
+const API_URL = "http://192.168.100.5:8001/server/bingo/cartillas";
+
 export default class Home extends Component{
     constructor(props) {
         super(props);
         this.state = {
           tableHead: ['B','I','N','G','O'],
-          tableData: [
-            ['70', '62', '3', '12', '42'],
-            ['91', '80', '18', '40', '38'],
-            ['1', '2', '', '45', '29'],
-            ['10', '50', '25', '86', '10'],
-            ['15', '24', '28', '74', '1']
-          ],
+          tableData: [],
           modalVisible: false,
         }
     }
@@ -52,6 +48,71 @@ export default class Home extends Component{
         })
     }
 
+    jugar = () => {
+        this.cargarTabla()
+    }
+
+    cargarTabla = () => {
+
+        let culumna1 = [];
+            let culumna2 = [];
+            let culumna3 = [];
+            let culumna4 = [];
+            let culumna5 = [];
+
+        const header = {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            }
+        }
+
+        fetch(API_URL,header)
+            .then((response) => response.json())
+            .then((responseJson) =>{
+               let arrayCartilla = responseJson
+               for(let i = 0; i <= arrayCartilla.length-1; i++){
+                if(i < 5){
+                    culumna1.push(arrayCartilla[i]);
+                }
+                else if(i < 10){
+                    culumna2.push(arrayCartilla[i]);
+                }
+                else if(i < 14){
+                    if(i < 12){
+                        culumna3.unshift(arrayCartilla[i]);
+                    }
+                    else if(i == 12){
+                        culumna3.push('Bingo');
+                    }
+                    else if(i < 14){
+                        culumna3.push(arrayCartilla[i])
+                    }
+                }
+                else if(i < 19){
+                    culumna4.push(arrayCartilla[i]);
+                }
+                else if(i < 24){
+                    culumna5.push(arrayCartilla[i]);
+                }
+            }
+
+            this.state.tableData.push(culumna1);
+            this.state.tableData.push(culumna2);
+            this.state.tableData.push(culumna3);
+            this.state.tableData.push(culumna4);
+            this.state.tableData.push(culumna5);
+            })
+            .catch((error) => {
+                alert(JSON.stringify(error))
+            })
+
+             this.status = true;
+             () => {location.reload()}
+             
+    }
+
     tablaComprobacion = () =>{
 
         let numero = 8;
@@ -73,14 +134,14 @@ export default class Home extends Component{
         return (    
             <View style={{marginTop: 22}}>
                 <ImageBackground source={require('../assets/picks/bingo.png')} style={styles.imagen}>
-                    <Header>
+                    <Header style={{backgroundColor: '#20575783'}}>
                         <Left>
                             <Button transparent onPress={() => {this.setModalVisible(!this.state.modalVisible)}}>
                                 <Icon name='arrow-back' />
                             </Button>
                         </Left>
                         <Body>
-                            <Title>Bingo</Title>
+                            <Title style={styles.input1}>Bingo</Title>
                         </Body>
                         <Right>
                             <Button transparent>
@@ -90,14 +151,10 @@ export default class Home extends Component{
                     </Header>
 
                     <View>
-                        <View style={styles.container_principal} onPress={ () => {this.status = true}}>
+                        <View style={styles.container_principal}>
                             {
                                 this.status == false ? 
-                                (<TextInput
-                                    style={styles.bola_principal_texto}
-                                    value='Jugar'
-                                    editable={false}
-                                />)
+                                (<Text style={styles.bola_principal_texto} onPress={this.jugar}>Jugar</Text>)
                                 :
                                 (<TextInput
                                     style={styles.bola_principal}
@@ -126,7 +183,7 @@ export default class Home extends Component{
                         </View>
                     </View>
 
-                    <TouchableHighlight style={styles.modal_position} onPress={() => { this.setModalVisible(true) }}>
+                    <TouchableHighlight style={styles.modal_position} onPress={() => { this.setModalVisible(!this.state.modalVisible)}}>
                         <Text>Mostrar modal</Text>
                         {/* <Image source = {require('../assets/modal.png')} /> */}
                     </TouchableHighlight>
@@ -171,13 +228,6 @@ export default class Home extends Component{
                                     <FlatList data={this.numerosC6} renderItem={({item}) => <Text style={styles.bola_tabla}>{item.key}</Text>} />
                                 </View> 
                             </ImageBackground>
-
-                            <TouchableHighlight 
-                                onPress={() => {
-                                    this.setModalVisible(!this.state.modalVisible);
-                                }}>
-                                <Text>Hide Modal</Text>
-                            </TouchableHighlight>
                         </View>
                     </View>       
                 </Modal>               
@@ -254,7 +304,8 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         color: "black",
         textAlign: "center",
-        fontSize: 50
+        fontSize: 50,
+        paddingTop: 35
       },
       container_secundarias: {
         alignItems: "center",

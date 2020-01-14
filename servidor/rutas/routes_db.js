@@ -11,5 +11,7 @@ api.delete("/bingo", control.deleteDatos);
 api.get("/bingobyid", control.getDatosbyID);
 api.post("/login", control.login);
 
+api.get("/bingo/cartillas", control.cartillas);
+
 
 module.exports = api;

@@ -1,6 +1,7 @@
 let config = require("../knexfile");
 let env = "development";
 let db = require("knex")(config[env]);
+const rec = require('./bingo')
 
 let getDatos = (req, res) => {
   let tabla = req.query.tabla;
@@ -139,11 +140,17 @@ let login = (req,res) =>{
 
 }
 
+let cartillas = (req, res) => {
+  rec.exportar();
+  return res.status(200).json(rec.tabla())
+}
+
 module.exports = {
   getDatos,
   postDatos,
   updateDatos,
   deleteDatos,
   getDatosbyID,
-  login
+  login,
+  cartillas
 };
