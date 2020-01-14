@@ -1,104 +1,518 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Bingo Game</title>
-        <link rel="icon" type="image/png" href="./assets/logo_app.png">
-        <link rel="stylesheet" href="./build/tailwind.css">
-        <!-- <link href="//db.onlinewebfonts.com/c/0801c08e5412f54e4b4e9ad146d83a12?family=Ink+Free" rel="stylesheet" type="text/css"/> -->
-        <style>
-            table {
-            border-radius: 5px;
-            }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Bingo Game</title>
+    <link rel="stylesheet" href="https://i.icomoon.io/public/132e75ef6a/UntitledProject/style.css">
+    <link rel="icon" type="image/png" href="./assets/logo_app.png" />
+    <link rel="stylesheet" href="./build/tailwind.css" />
+    <link rel="stylesheet" href="./build/bingo.css">
+    <link rel="stylesheet" href="./build/bingoball.css">
 
-            #n {
-            background-color: #ecc94b;
-            border-radius: 5px;
-            }
+    <!-- <link href="//db.onlinewebfonts.com/c/0801c08e5412f54e4b4e9ad146d83a12?family=Ink+Free" rel="stylesheet" type="text/css"/> -->
+    <style>
+      table {
+        border-radius: 5px;
+      }
 
-            #n1 {
-            background-color:#b7791f;
-            border-radius: 5px;
-            }
+      #n {
+        background-color: #ecc94b;
+        border-radius: 5px;
+      }
 
-            text{
-                text-decoration-color: black;
-            }
-        </style>
-    </head>
+      #n1 {
+        background-color: #b7791f;
+        border-radius: 5px;
+      }
 
-    <body onload="getDataPersona()">
-        <header class="lg:px-16 px-6 bg-gray-700 flex flex-wrap items-center lg:py-0 py-2">
-            <div class="flex-1 flex justify-between items-center">
-                <a href="#">
-                    <svg width="32" height="36" viewBox="0 0 32 36"></svg>
-                </a>
-            </div>
+      text {
+        text-decoration-color: black;
+      }
+    </style>
+  </head>
 
-            <label for="menu-toggle" class="pointer-cursor lg:hidden block"><svg class="fill-current text-gray-900" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><title>menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path></svg></label>
-            <input class="hidden" type="checkbox" id="menu-toggle" />
+  <body onload="getDataPersona()">
+    <header
+      class="lg:px-16 px-6 bg-gray-700 flex flex-wrap items-center lg:py-0 py-2"
+    >
+      <div class="flex-1 flex justify-between items-center">
+        <a href="#">
+          <svg width="32" height="36" viewBox="0 0 32 36"></svg>
+        </a>
+      </div>
 
-            <div class="hidden lg:flex lg:items-center lg:w-auto w-full" id="menu">
-                <nav>
-                    <ul class="lg:flex items-center justify-between text-base text-gray-700 pt-4 lg:pt-2">
-                    <ul class="text-white" id="persona_nombre"></ul>
-                    <!-- <li><a class="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400" href="#" type="button" class="PDF" onclick="pdf()"><img class="rounded-full w-10 h-10 border-2 border-transparent hover:border-indigo-400" src="./assets/print.png"></a></li> -->
-                    <li><img class="rounded-full w-10 h-10 border-2 border-transparent" src="./assets/user.png"></li>
-                    <li><a class="lg:ml-4 flex items-center justify-start lg:mb-0 mb-4 pointer-cursor" onclick="logout()"><img class="rounded-full w-10 h-10 border-2 border-transparent hover:border-indigo-400" src="./assets/exit.png"></a></li>
-                    <!-- <li><a class="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400" href="#"> <img class="rounded-full w-10 h-10 border-2 border-transparent hover:border-indigo-400" src="" ></a></li> -->
-                    </ul>
-                </nav>
-            </div>
-        </header>
+      <label for="menu-toggle" class="pointer-cursor lg:hidden block"
+        ><svg
+          class="fill-current text-gray-900"
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 20 20"
+        >
+          <title>menu</title>
+          <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
+        </svg>
+      </label>
+      <input class="hidden" type="checkbox" id="menu-toggle" />
 
-        <div class="flex ">
-            <div class="flex justify-between  text-center  px-4 py-2 m-2">
-                <table class="flex-grow ">
-                    <tr>
-                        <th id="n">B</th>
-                        <th id="n1">I</th>
-                        <th id="n">N</th>
-                        <th id="n1">G</th>
-                        <th id="n">O</th>
-                    </tr>
+      <div class="hidden lg:flex lg:items-center lg:w-auto w-full" id="menu">
+        <nav>
+          <ul
+            class="lg:flex items-center justify-between text-base text-gray-700 pt-4 lg:pt-2"
+          >
+            <ul class="text-white" id="persona_nombre"></ul>
+            <!-- <li><a class="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400" href="#" type="button" class="PDF" onclick="pdf()"><img class="rounded-full w-10 h-10 border-2 border-transparent hover:border-indigo-400" src="./assets/print.png"></a></li> -->
+            <li>
+              <img
+                class="rounded-full w-10 h-10 border-2 border-transparent"
+                src="./assets/user.png"
+              />
+            </li>
+            <li>
+              <a
+                class="lg:ml-4 flex items-center justify-start lg:mb-0 mb-4 pointer-cursor"
+                onclick="logout()"
+                ><img
+                  class="rounded-full w-10 h-10 border-2 border-transparent hover:border-indigo-400"
+                  src="./assets/exit.png"
+              /></a>
+            </li>
+            <!-- <li><a class="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400" href="#"> <img class="rounded-full w-10 h-10 border-2 border-transparent hover:border-indigo-400" src="" ></a></li> -->
+          </ul>
+        </nav>
+      </div>
+    </header>
 
-                    <tr>
-                        <td id="n1" class="border border-gray-400 px-4 py-2">13</td>
-                        <td id="n" class="border border-gray-400 px-4 py-2">20</td>
-                        <td id="n1" class="border border-gray-400 px-4 py-2">35</td>
-                        <td id="n" class="border border-gray-400 px-4 py-2">48</td>
-                        <td id="n1" class="border border-gray-400 px-4 py-2">63</td>
-                    </tr>
-                
-                    <tr>
-                        <td id="n" class="border border-black-400 px-4 py-2">4</td>
-                        <td id="n1" class="border border-black-400 px-4 py-2">26</td>
-                        <td id="n" class="border border-black-400 px-4 py-2"> </td>         <!-- VALOR MEDIO NO LLENAR -->
-                        <td id="n1" class="border border-black-400 px-4 py-2">52</td>
-                        <td id="n" class="border border-black-400 px-4 py-2">81</td>
-                    </tr>
-                
-                    <tr>
-                        <td id="n1" class="border border-black-400 px-4 py-2"> </td>
-                        <td id="n" class="border border-black-400 px-4 py-2">15</td>
-                        <td id="n1" class="border border-black-400 px-4 py-2">39</td>
-                        <td id="n" class="border border-black-400 px-4 py-2">60</td>
-                        <td id="n1" class="border border-black-400 px-4 py-2">95</td>
-                    </tr>
-
-                    <tr>
-                        <td id="n" class="border border-black-400 px-4 py-2"> 41</td>
-                        <td id="n1" class="border border-black-400 px-4 py-2">7</td>
-                        <td id="n" class="border border-black-400 px-4 py-2">89</td>
-                        <td id="n1" class="border border-black-400 px-4 py-2">70</td>                    
-                        <td id="n" class="border border-black-400 px-4 py-2"></td>                        
-                    </tr>
-                </table>
-            </div>
+<!-- ----------------------------------------------------------------------------------------------------------------- -->
+<div class="body">
+    <div class="wrapper">
+        <a class="icon-btn facebook" href="">B
+          <i class="icon-facebook"></i>
+          <span></span>
+        </a>
+        <div class="shadow"></div>
+       
+      </div>  
+    <div class="wrapper">
+          <a class="icon-btn facebook" href="">
+            <i class="icon-facebook"></i>I
+            <span></span>
+          </a>
+          <div class="shadow"></div>
+         
+        </div>  
+        
+        <div class="wrapper">
+          <a class="icon-btn twitter" href="">
+            <i class="icon-twitter"></i>N
+            <span></span>
+          </a>
+          <div class="shadow"></div>
         </div>
-    </body>
+        
+        <div class="wrapper">
+          <a class="icon-btn google-plus" href="">
+            <i class="icon-google-plus"></i>G
+            <span></span>
+          </a>
+          <div class="shadow"></div>
+        </div>
+        
+        <div class="wrapper">
+          <a class="icon-btn twitter" href="">
+            <i class="icon-twitter"></i>O
+            <span></span>
+          </a>
+          <div class="shadow"></div>
+        </div>
+        
 
-    <script src="./js/home.js"></script>
+
+    <!-- -------------------------------------------------------------------------------------------------------------------------- -->
+       <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+        <div id="wrapper">
+            <div id="number">00</div>
+            <div id="buttonWrapper">
+              <div id="reset">
+                <button id="resetBtn" onclick="reset()">RESET</button>
+              </div> 
+              <div id="next">
+                <button id="nextBtn" onclick="newNumber()">NEXT</button>
+              </div>
+            </div>
+            <div id="done" style="display:none"></div>
+            <div id="options">
+              <label><input type="checkbox" onclick="letters(this)" checked> Letters</label>
+              <br />
+              <label><input type="checkbox" onclick="results(this)"> Results</label>
+            </div>
+          </div>
+          <img id="nice" src="https://media1.tenor.com/images/ed61af8075e98d35b79ddcbc66e23c7d/tenor.gif?itemid=9421746" style="display:none"></img>
+    <script src="./js/bingo.js"></script>
+       <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+    <input type="button" class="bg-green-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-green-500 rounded" value="Cartilla 2" onclick="mostrar2();">
+    <input type="button" class="bg-green-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-green-500 rounded" value="Cartilla 3" onclick="mostrar3();">
+    <input type="button" class="bg-green-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-green-500 rounded" value="Cartilla 4" onclick="mostrar4();">
+ 
+    <div class="flex justify-center ">
+        <div class="flex justify-center  text-center  px-4 py-2 m-2">
+           <table  class="flex-grow ">
+
+                <tr>
+                    <th id="n" >B</th>
+                    <th id="n1" >I</th>
+                    <th id="n" >N</th>
+                    <th id="n1" >G</th>
+                    <th id="n" >O</th>
+                    
+                  </tr>
+
+                <tr>
+              
+                  <td  id="n1" class="border border-gray-400 px-4 py-2 " > 13 </td>
+              
+                  <td  id="n"  class="border border-gray-400 px-4 py-2" > 20</td >
+              
+                  <td  id="n1" class="border border-gray-400 px-4 py-2" > 35</td>
+
+                  <td  id="n"  class="border border-gray-400 px-4 py-2" >48</td>
+              
+                  <td  id="n1" class="border border-gray-400 px-4 py-2" >63</td>
+              
+                  
+              
+                </tr>
+              
+                <tr>
+              
+                  <td  id="n"  class="border border-black-400 px-4 py-2" > 4</td >
+              
+                  <td  id="n1" class="border border-black-400 px-4 py-2" >26</td>
+              
+                  <td  id="n"  class="border border-black-400 px-4 py-2" > </td>
+              
+                  <td  id="n1" class="border border-black-400 px-4 py-2" >52</td>
+              
+                  <td  id="n" class="border border-black-400 px-4 py-2" >81</td>
+
+                </tr>
+              
+                <tr>
+              
+                    <td  id="n1" class="border border-black-400 px-4 py-2" > </td>
+                
+                    <td  id="n"  class="border border-black-400 px-4 py-2" >15</td>
+                
+                    <td  id="n1" class="border border-black-400 px-4 py-2" >39</td>
+                
+                    <td  id="n"  class="border border-black-400 px-4 py-2" >60</td>
+                
+                    <td  id="n1" class="border border-black-400 px-4 py-2" >95</td>
+                    
+                  </tr>
+
+                  <tr>
+              
+                    <td  id="n"  class="border border-black-400 px-4 py-2" > 41</td>
+                
+                    <td  id="n1" class="border border-black-400 px-4 py-2" >7</td>
+                
+                    <td  id="n"  class="border border-black-400 px-4 py-2" >89</td>
+                
+                    <td  id="n1" class="border border-black-400 px-4 py-2" >70</td>
+                
+                    <td  id="n" class="border border-black-400 px-4 py-2" ></td>
+                    
+                  </tr>
+
+
+
+              </table>
+              </table>
+        </div>
+        <div  id="cartilla2" class="flex justify-center  text-center  px-4 py-2 m-2">
+           <table  class="flex-grow ">
+
+                <tr>
+                    <th id="n" >B</th>
+                    <th id="n1" >I</th>
+                    <th id="n" >N</th>
+                    <th id="n1" >G</th>
+                    <th id="n" >O</th>
+                    
+                  </tr>
+
+                <tr>
+              
+                  <td  id="n1" class="border border-gray-400 px-4 py-2 " > 13 </td>
+              
+                  <td  id="n"  class="border border-gray-400 px-4 py-2" > 20</td >
+              
+                  <td  id="n1" class="border border-gray-400 px-4 py-2" > 35</td>
+
+                  <td  id="n"  class="border border-gray-400 px-4 py-2" >48</td>
+              
+                  <td  id="n1" class="border border-gray-400 px-4 py-2" >63</td>
+              
+                  
+              
+                </tr>
+              
+                <tr>
+              
+                  <td  id="n"  class="border border-black-400 px-4 py-2" > 4</td >
+              
+                  <td  id="n1" class="border border-black-400 px-4 py-2" >26</td>
+              
+                  <td  id="n"  class="border border-black-400 px-4 py-2" > </td>
+              
+                  <td  id="n1" class="border border-black-400 px-4 py-2" >52</td>
+              
+                  <td  id="n" class="border border-black-400 px-4 py-2" >81</td>
+
+                </tr>
+              
+                <tr>
+              
+                    <td  id="n1" class="border border-black-400 px-4 py-2" > </td>
+                
+                    <td  id="n"  class="border border-black-400 px-4 py-2" >15</td>
+                
+                    <td  id="n1" class="border border-black-400 px-4 py-2" >39</td>
+                
+                    <td  id="n"  class="border border-black-400 px-4 py-2" >60</td>
+                
+                    <td  id="n1" class="border border-black-400 px-4 py-2" >95</td>
+                    
+                  </tr>
+
+                  <tr>
+              
+                    <td  id="n"  class="border border-black-400 px-4 py-2" > 41</td>
+                
+                    <td  id="n1" class="border border-black-400 px-4 py-2" >7</td>
+                
+                    <td  id="n"  class="border border-black-400 px-4 py-2" >89</td>
+                
+                    <td  id="n1" class="border border-black-400 px-4 py-2" >70</td>
+                
+                    <td  id="n" class="border border-black-400 px-4 py-2" ></td>
+                    
+                  </tr>
+
+
+
+              </table>
+              </table>
+        </div>
+        <div  id="cartilla3" class="flex justify-center  text-center  px-4 py-2 m-2">
+           <table  class="flex-grow ">
+
+                <tr>
+                    <th id="n" >B</th>
+                    <th id="n1" >I</th>
+                    <th id="n" >N</th>
+                    <th id="n1" >G</th>
+                    <th id="n" >O</th>
+                    
+                  </tr>
+
+                <tr>
+              
+                  <td  id="n1" class="border border-gray-400 px-4 py-2 " > 13 </td>
+              
+                  <td  id="n"  class="border border-gray-400 px-4 py-2" > 20</td >
+              
+                  <td  id="n1" class="border border-gray-400 px-4 py-2" > 35</td>
+
+                  <td  id="n"  class="border border-gray-400 px-4 py-2" >48</td>
+              
+                  <td  id="n1" class="border border-gray-400 px-4 py-2" >63</td>
+              
+                  
+              
+                </tr>
+              
+                <tr>
+              
+                  <td  id="n"  class="border border-black-400 px-4 py-2" > 4</td >
+              
+                  <td  id="n1" class="border border-black-400 px-4 py-2" >26</td>
+              
+                  <td  id="n"  class="border border-black-400 px-4 py-2" > </td>
+              
+                  <td  id="n1" class="border border-black-400 px-4 py-2" >52</td>
+              
+                  <td  id="n" class="border border-black-400 px-4 py-2" >81</td>
+
+                </tr>
+              
+                <tr>
+              
+                    <td  id="n1" class="border border-black-400 px-4 py-2" > </td>
+                
+                    <td  id="n"  class="border border-black-400 px-4 py-2" >15</td>
+                
+                    <td  id="n1" class="border border-black-400 px-4 py-2" >39</td>
+                
+                    <td  id="n"  class="border border-black-400 px-4 py-2" >60</td>
+                
+                    <td  id="n1" class="border border-black-400 px-4 py-2" >95</td>
+                    
+                  </tr>
+
+                  <tr>
+              
+                    <td  id="n"  class="border border-black-400 px-4 py-2" > 41</td>
+                
+                    <td  id="n1" class="border border-black-400 px-4 py-2" >7</td>
+                
+                    <td  id="n"  class="border border-black-400 px-4 py-2" >89</td>
+                
+                    <td  id="n1" class="border border-black-400 px-4 py-2" >70</td>
+                
+                    <td  id="n" class="border border-black-400 px-4 py-2" ></td>
+                    
+                  </tr>
+
+
+
+              </table>
+              </table>
+        </div>
+
+       <div id="cartilla4" class="flex justify-center  text-center  px-4 py-2 m-2">
+           <table  class="flex-grow ">
+
+                <tr>
+                    <th id="n" >B</th>
+                    <th id="n1" >I</th>
+                    <th id="n" >N</th>
+                    <th id="n1" >G</th>
+                    <th id="n" >O</th>
+                    
+                  </tr>
+
+                <tr>
+              
+                  <td  id="n1" class="border border-gray-400 px-4 py-2 " > 13 </td>
+              
+                  <td  id="n"  class="border border-gray-400 px-4 py-2" > 20</td >
+              
+                  <td  id="n1" class="border border-gray-400 px-4 py-2" > 35</td>
+
+                  <td  id="n"  class="border border-gray-400 px-4 py-2" >48</td>
+              
+                  <td  id="n1" class="border border-gray-400 px-4 py-2" >63</td>
+              
+                  
+              
+                </tr>
+              
+                <tr>
+              
+                  <td  id="n"  class="border border-black-400 px-4 py-2" > 4</td >
+              
+                  <td  id="n1" class="border border-black-400 px-4 py-2" >26</td>
+              
+                  <td  id="n"  class="border border-black-400 px-4 py-2" > </td>
+              
+                  <td  id="n1" class="border border-black-400 px-4 py-2" >52</td>
+              
+                  <td  id="n" class="border border-black-400 px-4 py-2" >81</td>
+
+                </tr>
+              
+                <tr>
+              
+                    <td  id="n1" class="border border-black-400 px-4 py-2" > </td>
+                
+                    <td  id="n"  class="border border-black-400 px-4 py-2" >15</td>
+                
+                    <td  id="n1" class="border border-black-400 px-4 py-2" >39</td>
+                
+                    <td  id="n"  class="border border-black-400 px-4 py-2" >60</td>
+                
+                    <td  id="n1" class="border border-black-400 px-4 py-2" >95</td>
+                    
+                  </tr>
+
+                  <tr>
+              
+                    <td  id="n"  class="border border-black-400 px-4 py-2" > 41</td>
+                
+                    <td  id="n1" class="border border-black-400 px-4 py-2" >7</td>
+                
+                    <td  id="n"  class="border border-black-400 px-4 py-2" >89</td>
+                
+                    <td  id="n1" class="border border-black-400 px-4 py-2" >70</td>
+                
+                    <td  id="n" class="border border-black-400 px-4 py-2" ></td>
+                    
+                  </tr>
+
+
+
+              </table>
+              </table>
+        </div>
+
+    </div>
+      <script type="text/javascript">
+        
+  
+
+         function cartilla2 (){
+          document.getElementById('cartilla2').style.display='none';
+       
+        }
+         function cartilla3 (){
+          document.getElementById('cartilla3').style.display='none';
+       
+        }
+     
+      function cartilla4 (){
+          document.getElementById('cartilla4').style.display='none';
+       
+        }
+
+        function esconderCartillas (){
+   
+          cartilla2();
+          cartilla3();
+          cartilla4();
+
+        }
+
+          window.onload = esconderCartillas;
+
+
+        function mostrar2 (){
+          document.getElementById('cartilla2').style.display='block';
+        
+        }
+
+        function mostrar3 (){
+          document.getElementById('cartilla3').style.display='block';
+        
+        }
+
+        function mostrar4 (){
+          document.getElementById('cartilla4').style.display='block';
+        
+        }
+        
+        
+        
+
+
+
+      </script>
+      </div>
+  </body>
+
+  <script src="./js/home.js"></script>
 </html>

@@ -9,20 +9,24 @@
         <link rel="stylesheet" type="text/css" href="build/tailwind.css">
     </head>
 
-    <body class="bg-green-800 h-full text-gray-600 flex flex-col">
-        <div class="h-16 bg-green-700 flex items-center justify-between shadow">
-            <div class="px-4">
-                <a href="index.html" class="text-white text-2xl  flex items-center py-3 rounded hover:bg-gray-400">
-                    <img class="w-10 h-10 text-gray-100 mr-3 items-center" src="./assets/logo_app.png">
-                    BINGO
+    <body class=" h-full text-gray-600 flex flex-col"><img class="  w-screen absolute opacity-100 " src="../img/12122706_937715656300448_8991729627175392276_n20.jpg" alt="">
+        <div class=" absolute h-16 bg-green-700 flex items-center justify-between shadow">
+            <div class="absolute px-4">
+                <a href="index.html" class="text-white text-2xl  flex items-center py-3 rounded ">
+                    <img class="w-32 h-20 text-gray-100 mr-3 items-center" src="./assets/logo_app.png">
+                    <span class="text-red-700 text-5xl font-bold ml-8 ">B</span><span
+                        class="text-yellow-500 text-5xl font-bold  ml-8">I</span><span
+                        class="text-blue-200 text-5xl  font-bold   ml-8">N</span> <span
+                        class="text-black-800 text-5xl font-bold  ml-8">G</span> <span
+                        class="text-orange-400 text-5xl  font-bold  ml-8">O</span>
                 </a>
             </div>
         </div>
 
-        <div class="flex">
-            <div class="flex-1 md:mt-1 shadow bg-green-900 ">
-                <div class="bg-green-900 p-10 shadow text-xl text-white">
-                    <h1 class=" flex items-center text-2xl text-white font-serif ml-64 mr-64">Registro de Usuario</h1>
+        <div class="flex opacity-100 ">
+            <div class="flex-1 md:mt-1  bg-transparent absolute ">
+                <div class="bg-transparent ml-64 mr-64 p-10 text-xl text-white">
+                    <h1 class=" flex items-center text-2xl text-white font-extrabold font-serif ml-56 mr-56">Registro de Usuario</h1>
                 </div>
 
                 <form class="bg-white shadow rounded px-8 pt-6 pb-8 mb-4 flex flex-col ml-64 mr-64" action="" method="post">
@@ -39,8 +43,8 @@
                         <input class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3" id="persona_clave" name="persona_clave" type="password" placeholder="******">
                     </div>
                     <div class="flex items-center justify-between">
-                        <button class="float-left bg-green-900 hover:bg-green-600 text-white font-bold py-2 px-4 rounded" type="button" onclick="postDataPersona()">Registrarse</button>
-                        <a class="float-right bg-red-600 hover:bg-green-600 text-white font-bold py-2 px-4 rounded" type="button" href="index.html">Volver</a>
+                        <button class="float-left bg-red-700 hover:bg-red-500 text-white font-bold py-2 px-4 rounded" type="button" onclick="postDataPersona()">Registrarse</button>
+                        <a class="float-right bg-red-700 hover:bg-red-500 text-white font-bold py-2 px-4 rounded" type="button" href="index.html">Volver</a>
                     </div>
                 </form>
             </div>

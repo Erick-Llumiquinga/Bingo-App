@@ -9,16 +9,16 @@ postDataPersona = () => {
   let persona_email = document.getElementById("persona_email").value;
   let persona_clave = document.getElementById("persona_clave").value;
 
-  let data = `{
-    "tabla": "${tabla}", 
-    "datos":
+  let data = {
+    tabla: tabla, 
+    datos:
       {
-        "tipo_persona_id": 2,
-        "persona_nombre": "${persona_nombre}",
-        "persona_email": "${persona_email}",
-        "persona_clave": "${persona_clave}"
+        tipo_persona_id: 2,
+        persona_nombre: persona_nombre,
+        persona_email: persona_email,
+        persona_clave: persona_clave
       }
-   }`;
+   };
 
   http.open("POST", API_URL, true);
   http.setRequestHeader("Content-Type", "application/json");
@@ -26,7 +26,7 @@ postDataPersona = () => {
   if (persona_nombre == "" || persona_email == "" || persona_clave == "") {
     alert("Complete todos los datos para continuar...");
   } else {
-    http.send(data);
+    http.send(JSON.stringify(data));
     alert("Se ha registrado correctamente");
     window.location.assign("./login.html");
   }

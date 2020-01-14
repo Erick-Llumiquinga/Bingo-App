@@ -1,0 +1,100 @@
+@import url("https://fonts.googleapis.com/css?family=Oswald&display=swap");
+* {
+  font-family: "Oswald", sans-serif;
+}
+
+#wrapper {
+  height: 98vh;
+  max-width: 1080px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+#number {
+  text-align: center;
+  font-size: 100pt;
+  font-weight: bolder;
+  margin-bottom: 200px;
+}
+
+iframe {
+  border: none;
+}
+
+#buttonWrapper {
+  text-align: center;
+  margin: 0 auto;
+  margin-bottom: 50px;
+  width: 100%;
+
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+#reset > button {
+  background-color: firebrick;
+}
+#next > button {
+  background-color: #12c512;
+}
+#next > button:disabled,
+#next > button[disabled] {
+  background-color: #65af65;
+  cursor: default;
+}
+
+#reset > button,
+#next > button {
+  color: #fff;
+  width: 120px;
+  height: 50px;
+  outline: none;
+  border: 0;
+  text-decoration: none;
+  font-weight: 800;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+button:hover {
+  letter-spacing: 0.125rem;
+}
+
+#done,
+#nice {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+}
+
+#done {
+  top: 0px;
+  bottom: 30px;
+  text-align: center;
+  max-width: 500px;
+}
+#options {
+  position: relative;
+  top: 15px;
+  left: 15px;
+}
+
+#green {
+  color: #558b2f;
+}
+#pink {
+  color: #c2185b;
+}
+#orange {
+  color: #f57c00;
+}
+#blue {
+  color: #1565c0;
+}
+#yellow {
+  color: #fbc02d;
+}
