@@ -10,7 +10,7 @@ api.put("/bingo", control.updateDatos);
 api.delete("/bingo", control.deleteDatos);
 api.get("/bingobyid", control.getDatosbyID);
 api.post("/login", control.login);
-
+api.get("/bingo/jugar", control.numerosAleatorios);
 api.get("/bingo/cartillas", control.cartillas);
 
 

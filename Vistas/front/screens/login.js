@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import * as Font from 'expo-font';
 import { StyleSheet, ImageBackground, Text, RecyclerViewBackedScrollView } from 'react-native';
-import { Container, Content, Card, CardItem, Body, Item, Label, Input, Button } from 'native-base';
+import { Container, Content, Card, CardItem, Body, Item, Label, Input, Button, Spinner  } from 'native-base';
 
-const API_URL = "http://192.168.100.5:8001/server/login";
+const API_URL = "http://192.168.100.12:8001/server/login";
 
 export default class Login extends Component {
 
@@ -50,10 +50,10 @@ export default class Login extends Component {
             .then((response) => response.json())
             .then((responseJson) => {
                 if(responseJson.mensaje != 'inc'){
-                    return this.props.navigation.push('Inicio')
 
+                    return this.props.navigation.push('Inicio')
                 }
-                return alert(JSON.stringify(responseJson))
+                return alert('Datos incorrectos')
             })
             .catch((error) => {
                 console.error(error);
@@ -92,7 +92,7 @@ export default class Login extends Component {
                                    
                                     </Item>
                                     
-                                    <Button rounded style={styles.btn} onPress={() => this.props.navigation.push('Inicio')}>
+                                    <Button rounded style={styles.btn} onPress={() => this.login()}>
                                         <Text style={styles.txt} >Ingresar</Text>
                                     </Button>
                                     <Button rounded style={styles.btn2} onPress={() => this.props.navigation.push('Registro')}>

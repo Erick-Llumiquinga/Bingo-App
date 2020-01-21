@@ -1,7 +1,8 @@
 let config = require("../knexfile");
 let env = "development";
 let db = require("knex")(config[env]);
-const rec = require('./bingo')
+let rec = require('./cartillas')
+let numeros = require('./bingo')
 
 let getDatos = (req, res) => {
   let tabla = req.query.tabla;
@@ -145,6 +146,14 @@ let cartillas = (req, res) => {
   return res.status(200).json(rec.tabla())
 }
 
+let numerosAleatorios = (req, res) => {
+  return res.status(200).json(JSON.stringify(numeros.exportar()));
+}
+
+let compararNumeros = (req, res) => {
+  return res.status(200).json(JSON.stringify(numeros.exportar2()));
+}
+
 module.exports = {
   getDatos,
   postDatos,
@@ -152,5 +161,6 @@ module.exports = {
   deleteDatos,
   getDatosbyID,
   login,
-  cartillas
+  cartillas,
+  numerosAleatorios
 };

@@ -1,21 +1,30 @@
 import React, { Component } from 'react';
 import { Image, Modal, Text, TouchableHighlight, View, Alert, TextInput, FlatList, StyleSheet, ImageBackground } from 'react-native';
-import {  Container, Header, Title, Button, Left, Right, Body, Icon  } from 'native-base';
+import {  Container, Header, Title, Button, Left, Right, Body, Icon, Spinner, Fab, Form   } from 'native-base';
 import { Table, Row, Rows } from 'react-native-table-component';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import {faCoffee } from '@fortawesome/free-solid-svg-icons';
 
-const API_URL = "http://192.168.100.5:8001/server/bingo/cartillas";
+
+
+const API_URL = "http://192.168.100.12:8001/server/bingo/cartillas";
+const API_URL_Start = "http://192.168.100.12:8001/server/bingo/jugar";
 
 export default class Home extends Component{
     constructor(props) {
         super(props);
+        
         this.state = {
           tableHead: ['B','I','N','G','O'],
           tableData: [],
+          numerosTemporales: [],
+          numerosJugados: [],
           modalVisible: false,
+          status: false,
+          numeroBola: 'Jugar',
         }
+        this.cargarTabla();
     }
-
-    status = false
 
     estadoFila1 = false;
     estadoFila2 = false;
@@ -23,18 +32,15 @@ export default class Home extends Component{
     estadoFila4 = false;
     estadoFila5 = false;
     estadoFila6 = false;
-    
 
+    numerosC1 = [{key: 1,state: false},{key: 7,state: false},{key: 13,state: false},{ key: 19,state: false},{key: 25,state: false},{key: 31,state: false},{key: 37,state: false},{key: 43,state: false},{key: 49,state: false},{key: 55,state: false},{key: 61,state: false},{key: 67,state: false},{key: 73,state: false},{key: 79,state: false},{key: 85,state: false}]
+    numerosC2 = [{key: 2,state: false},{key: 8,state: false},{key: 14,state: false},{key: 20,state: false},{key: 26,state: false},{key: 32,state: false},{key: 38,state: false},{key: 44,state: false},{key: 50,state: false},{key: 56,state: false},{key: 62,state: false},{key: 68,state: false},{key: 74,state: false},{key: 80,state: false},{key: 86,state: false}]
+    numerosC3 = [{key: 3,state: false},{key: 9,state: false},{key: 15,state: false},{key: 21,state: false},{key: 27,state: false},{key: 33,state: false},{key: 39,state: false},{key: 45,state: false},{key: 51,state: false},{key: 57,state: false},{key: 63,state: false},{key: 69,state: false},{key: 75,state: false},{key: 81,state: false},{key: 87,state: false}]
+    numerosC4 = [{key: 4,state: false},{key: 10,state: false},{key: 16,state: false},{key: 22,state: false},{key: 28,state: false},{key: 34,state: false},{key: 40,state: false},{key: 46,state: false},{key: 52,state: false},{key: 58,state: false},{key: 64,state: false},{key: 70,state: false},{key: 76,state: false},{key: 82,state: false},{key: 88,state: false}]
+    numerosC5 = [{key: 5,state: false},{key: 11,state: false},{key: 17,state: false},{key: 23,state: false},{key: 29,state: false},{key: 35,state: false},{key: 41,state: false},{key: 47,state: false},{key: 53,state: false},{key: 59,state: false},{key: 65,state: false},{key: 71,state: false},{key: 77,state: false},{key: 83,state: false},{key: 89,state: false}]
+    numerosC6 = [{key: 6,state: false},{key: 12,state: false},{key: 18,state: false},{key: 24,state: false},{key: 30,state: false},{key: 36,state: false},{key: 42,state: false},{key: 48,state: false},{key: 54,state: false},{key: 60,state: false},{key: 66,state: false},{key: 72,state: false},{key: 78,state: false},{key: 84,state: false},{key: 90,state: false}]
 
-    numerosC1 = [{key: 1},{key: 7},{key: 13},{ key: 19},{key: 25},{key: 31},{key: 37},{key: 43},{key: 49},{key: 55},{key: 61},{key: 67},{key: 73},{key: 79},{key: 85}]
-    numerosC2 = [{key: 2},{key: 8},{key: 14},{key: 20},{key: 26},{key: 32},{key: 38},{key: 44},{key: 50},{key: 56},{key: 62},{key: 68},{key: 74},{key: 80},{key: 86}]
-    numerosC3 = [{key: 3},{key: 9},{key: 15},{key: 21},{key: 27},{key: 33},{key: 39},{key: 45},{key: 51},{key: 57},{key: 63},{key: 69},{key: 75},{key: 81},{key: 87}]
-    numerosC4 = [{key: 4},{key: 10},{key: 16},{key: 22},{key: 28},{key: 34},{key: 40},{key: 46},{key: 52},{key: 58},{key: 64},{key: 70},{key: 76},{key: 82},{key: 88}]
-    numerosC5 = [{key: 5},{key: 11},{key: 17},{key: 23},{key: 29},{key: 35},{key: 41},{key: 47},{key: 53},{key: 59},{key: 65},{key: 71},{key: 77},{key: 83},{key: 89}]
-    numerosC6 = [{key: 6},{key: 12},{key: 18},{key: 24},{key: 30},{key: 36},{key: 42},{key: 48},{key: 54},{key: 60},{key: 66},{key: 72},{key: 78},{key: 84},{key: 90}]
-
-    numerosTemporales = [3,1,90,25];
-    numeroBola = 0;
+   
 
     setModalVisible(visible){
         this.setState({modalVisible: visible})
@@ -43,16 +49,37 @@ export default class Home extends Component{
     async componentDidMount() {
         await Font.loadAsync({
             'bin-font': require('../assets/fonts/ShadowsIntoLight-Regular.ttf'),
+            'Roboto': require('../node_modules/native-base/Fonts/Roboto.ttf'),
+            'Roboto_medium': require('../node_modules/native-base/Fonts/Roboto_medium.ttf'),
         }).then(() => {
             this.setState({ fontLoaded: true })
-        })
+        });
+
     }
 
     jugar = () => {
-        this.cargarTabla()
+            const header = {
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                }
+            }
+
+            return fetch(API_URL_Start,header)
+                .then((response) => response.json())
+                .then((responseJson) => {
+                    this.state.numeroBola = responseJson;
+                    this.cargarNumTemp(responseJson);
+                })
+                .catch((error) => {
+                    console.error(error);   
+                })
+        
     }
 
-    cargarTabla = () => {
+
+    cargarTabla = ()=>{
 
         let culumna1 = [];
             let culumna2 = [];
@@ -68,7 +95,7 @@ export default class Home extends Component{
             }
         }
 
-        fetch(API_URL,header)
+        return fetch(API_URL,header)
             .then((response) => response.json())
             .then((responseJson) =>{
                let arrayCartilla = responseJson
@@ -79,38 +106,85 @@ export default class Home extends Component{
                 else if(i < 10){
                     culumna2.push(arrayCartilla[i]);
                 }
-                else if(i < 14){
+                else if(i < 15){
                     if(i < 12){
                         culumna3.unshift(arrayCartilla[i]);
                     }
                     else if(i == 12){
                         culumna3.push('Bingo');
                     }
-                    else if(i < 14){
+                    else if(i < 15){
                         culumna3.push(arrayCartilla[i])
                     }
                 }
-                else if(i < 19){
+                else if(i < 20){
                     culumna4.push(arrayCartilla[i]);
                 }
-                else if(i < 24){
+                else if(i < 25){
                     culumna5.push(arrayCartilla[i]);
                 }
             }
 
-            this.state.tableData.push(culumna1);
-            this.state.tableData.push(culumna2);
-            this.state.tableData.push(culumna3);
-            this.state.tableData.push(culumna4);
-            this.state.tableData.push(culumna5);
+                this.state.tableData.push(culumna1);
+                this.state.tableData.push(culumna2);
+                this.state.tableData.push(culumna3);
+                this.state.tableData.push(culumna4);
+                this.state.tableData.push(culumna5);
+
             })
             .catch((error) => {
                 alert(JSON.stringify(error))
             })
-
-             this.status = true;
-             () => {location.reload()}
              
+    }
+
+    cargarNumTemp = (num) => {
+        if(this.state.numerosTemporales.length === 4){
+            this.state.numerosTemporales.shift();
+            this.state.numerosTemporales.push(num);
+            this.state.numerosJugados.push(num);
+            this.pintarNumeros(this.state.numerosJugados);
+        }
+        else{
+            this.state.numerosTemporales.push(num);
+            this.state.numerosJugados.push(num);
+            this.pintarNumeros(this.state.numerosJugados);
+        }
+    }
+
+    pintarNumeros = (numArray) => {
+        numArray.forEach(num => {
+            this.numerosC1.forEach(element =>{
+                if(parseInt(num) == element.key){
+                    return element.state = true;
+                }
+            });
+            this.numerosC2.forEach(element =>{
+                if(parseInt(num) == element.key){
+                    return element.state = true;
+                }
+            });
+            this.numerosC3.forEach(element =>{
+                if(parseInt(num) == element.key){
+                    return element.state = true;
+                }
+            });
+            this.numerosC4.forEach(element =>{
+                if(parseInt(num) == element.key){
+                    return element.state = true;
+                }
+            });
+            this.numerosC5.forEach(element =>{
+                if(parseInt(num) == element.key){
+                    return element.state = true;
+                }
+            });
+            this.numerosC6.forEach(element =>{
+                if(parseInt(num) == element.key){
+                    return element.state = true;
+                }
+            });
+        })
     }
 
     tablaComprobacion = () =>{
@@ -125,19 +199,13 @@ export default class Home extends Component{
     }
 
     render() {
-        const numeroColumnas = []
-      
-        for(let i = 1; i <= 15; i++){
-            numeroColumnas.push(i);
-        }
-
         return (    
-            <View style={{marginTop: 22}}>
+            <View >
                 <ImageBackground source={require('../assets/picks/bingo.png')} style={styles.imagen}>
                     <Header style={{backgroundColor: '#20575783'}}>
                         <Left>
-                            <Button transparent onPress={() => {this.setModalVisible(!this.state.modalVisible)}}>
-                                <Icon name='arrow-back' />
+                            <Button transparent onPress={() => {this.props.navigation.push('Login') }}>
+                                <Text>Regresar</Text>
                             </Button>
                         </Left>
                         <Body>
@@ -152,22 +220,12 @@ export default class Home extends Component{
 
                     <View>
                         <View style={styles.container_principal}>
-                            {
-                                this.status == false ? 
-                                (<Text style={styles.bola_principal_texto} onPress={this.jugar}>Jugar</Text>)
-                                :
-                                (<TextInput
-                                    style={styles.bola_principal}
-                                    value={this.numeroBola.toString()}
-                                    editable={false}
-                                />)
-                            }
-                            
+                            <Text style={styles.bola_principal_texto} onPress={this.jugar}>{this.state.numeroBola}</Text>
                         </View>
 
                         <View style={styles.container_secundarias}>
                             {
-                                this.numerosTemporales.map(item => <TextInput
+                                this.state.numerosTemporales.map(item => <TextInput
                                     style={styles.bola_secundaria}
                                     value={item.toString()}
                                     editable={false}
@@ -176,30 +234,31 @@ export default class Home extends Component{
                         </View>
 
                         <View style={styles.cartilla}>
-                            <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}} style={{backgroundColor: '#537791', }}>
+                            <Table borderStyle={{borderWidth: 1, borderColor: '#896A51'}} style={{backgroundColor: '#F2D0A7',}}>
                                 <Row data={this.state.tableHead} style={styles.head} textStyle={styles.text}/>
                                 <Rows data={this.state.tableData} textStyle={styles.text} />
                             </Table>
                         </View>
                     </View>
 
-                    <TouchableHighlight style={styles.modal_position} onPress={() => { this.setModalVisible(!this.state.modalVisible)}}>
-                        <Text>Mostrar modal</Text>
-                        {/* <Image source = {require('../assets/modal.png')} /> */}
-                    </TouchableHighlight>
+                    
+                    <Fab position="bottomLeft" style={{backgroundColor: 'white' }} onPress={() => { this.setModalVisible(!this.state.modalVisible)}}>
+                        <Image source={require('../assets/icons8.png')} style={{height: '80%', width: '80%'}}/>
+                     </Fab>
+                    
                 </ImageBackground>
 
                 <Modal animationType="slide" 
                     transparent={false} 
-                    visible={this.state.modalVisible} 
-                    onRequestClose={() => { Alert.alert('Modal has been closed.') }}>
-                    <View style={{marginTop: 22}}>
+                    visible={this.state.modalVisible}>
+                    <View >
                         <View>
                             <ImageBackground source={require('../assets/picks/bingo.png')} style={styles.imagen}>
                                 <Header style={{backgroundColor: '#20575783'}}>
                                     <Left>
                                         <Button transparent onPress={() => {this.setModalVisible(!this.state.modalVisible)}}>
                                             <Icon name='arrow-back' />
+                                            <Text>Regresar</Text>
                                         </Button>
                                     </Left>
                                     <Body>
@@ -210,22 +269,22 @@ export default class Home extends Component{
                                 </Header>
 
                                 <View style={styles.containerTabla1}> 
-                                    <FlatList data={this.numerosC1} renderItem={({item}) => <Text style={styles.bola_tabla}>{item.key}</Text>} editable={true}/>
+                                    <FlatList data={this.numerosC1} renderItem={({item}) => item.state == true  ? (<Text style={styles.bola_tabla_W}>{item.key}</Text> ):(<Text style={styles.bola_tabla}>{item.key}</Text>)} />
                                 </View>    
                                 <View style={styles.containerTabla2}> 
-                                    <FlatList data={this.numerosC2} renderItem={({item}) => <Text style={styles.bola_tabla}>{item.key}</Text>} />
+                                    <FlatList data={this.numerosC2} renderItem={({item}) => item.state == true  ? (<Text style={styles.bola_tabla_W}>{item.key}</Text> ):(<Text style={styles.bola_tabla}>{item.key}</Text>)} />
                                 </View> 
                                 <View style={styles.containerTabla3}> 
-                                    <FlatList data={this.numerosC3} renderItem={({item}) => <Text style={styles.bola_tabla}>{item.key}</Text>} />
+                                    <FlatList data={this.numerosC3} renderItem={({item}) => item.state == true  ? (<Text style={styles.bola_tabla_W}>{item.key}</Text> ):(<Text style={styles.bola_tabla}>{item.key}</Text>)} />
                                 </View> 
-                                <View style={styles.containerTabla4}> 
-                                    <FlatList data={this.numerosC4} renderItem={({item}) => <Text style={styles.bola_tabla}>{item.key}</Text>} />
+                                <View style={styles.containerTabla4}>
+                                    <FlatList data={this.numerosC4} renderItem={({item}) => item.state == true  ? (<Text style={styles.bola_tabla_W}>{item.key}</Text> ):(<Text style={styles.bola_tabla}>{item.key}</Text>)} />
                                 </View> 
                                 <View style={styles.containerTabla5}> 
-                                    <FlatList data={this.numerosC5} renderItem={({item}) => <Text style={styles.bola_tabla}>{item.key}</Text>} />
+                                    <FlatList data={this.numerosC5} renderItem={({item}) => item.state == true  ? (<Text style={styles.bola_tabla_W}>{item.key}</Text> ):(<Text style={styles.bola_tabla}>{item.key}</Text>)} />
                                 </View> 
                                 <View style={styles.containerTabla6}> 
-                                    <FlatList data={this.numerosC6} renderItem={({item}) => <Text style={styles.bola_tabla}>{item.key}</Text>} />
+                                    <FlatList data={this.numerosC6} renderItem={({item}) => item.state == true  ? (<Text style={styles.bola_tabla_W}>{item.key}</Text> ):(<Text style={styles.bola_tabla}>{item.key}</Text>)} />
                                 </View> 
                             </ImageBackground>
                         </View>
@@ -286,25 +345,22 @@ const styles = StyleSheet.create({
       },
       bola_principal: {
         backgroundColor: "white",
-        width: 150,
-        height: 150,
-        borderColor: "black",
-        borderWidth: 2,
+        width: 120,
+        height: 120,
+
         borderRadius: 100,
         color: "black",
         textAlign: "center",
-        fontSize: 100
+        fontSize: 80
       },
       bola_principal_texto: {
         backgroundColor: "white",
-        width: 150,
-        height: 150,
-        borderColor: "black",
-        borderWidth: 2,
+        width: 120,
+        height: 120,
         borderRadius: 100,
         color: "black",
         textAlign: "center",
-        fontSize: 50,
+        fontSize: 35,
         paddingTop: 35
       },
       container_secundarias: {
@@ -314,23 +370,24 @@ const styles = StyleSheet.create({
         marginTop: 25,
       },
       bola_secundaria: {
-          backgroundColor: "black",
-          width: 100,
-          height: 100,
-          borderColor: "white",
-          borderWidth: 2,
+          backgroundColor: "#013440",
+          width: 70,
+          height: 70,
           borderRadius: 100,
-          marginBottom: 50,
+          marginBottom: 20,
+          marginLeft: 5,
           color: "white",
           textAlign: "center",
-          fontSize: 50,
+          fontSize: 35,
       },
       cartilla: {
-        // left: 25,
+        left: '7%',
+        width: '90%',
+        borderRadius: 10
       },
       head: { 
           height: 40, 
-          backgroundColor: 'brown',
+          backgroundColor: '#BF9D7E',
         },
       text: { 
           margin: 6 , 
@@ -338,11 +395,10 @@ const styles = StyleSheet.create({
           textAlign: "center",
         },  
     imagen:{
-      width: '105%',
+      width: '104%',
       height: '100%',
       position: 'relative',
       right: '4%',
-      bottom: '5%'
     },
     header:{
       backgroundColor: '#327373',
@@ -361,6 +417,19 @@ const styles = StyleSheet.create({
         textAlign: "center",
         fontSize: 17
     },
+    bola_tabla_W:{
+        position: 'relative',
+        top: '10%',
+        left: '20%',
+        backgroundColor: "white",
+        width: 30,
+        height: 30,
+        borderRadius: 100,
+        marginBottom: 3,
+        color: "black",
+        textAlign: "center",
+        fontSize: 17
+    },
       textoBlanco: {
         color: '#ffffff'
     },
@@ -371,7 +440,7 @@ const styles = StyleSheet.create({
     },
     modal_position: {
         position: 'absolute',
-        bottom: 0,
+        bottom: 15,
         left: 25,
     }
 })
