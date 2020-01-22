@@ -146,7 +146,6 @@ const styles = StyleSheet.create({
         fontSize: 30,
         marginLeft: '5%',
         color: '#EFFBF8',
-
     },
     registrar2: {
         flex: 1,
@@ -155,7 +154,6 @@ const styles = StyleSheet.create({
         fontSize: 30,
         marginLeft: '5%',
         color: '#EFFBF8',
-
     },
     content: {
         flex: 1,
@@ -164,8 +162,6 @@ const styles = StyleSheet.create({
         height: '100%',
         marginLeft: '13%',
         paddingBottom: '25%',
-
-
     },
     cardMom: {
         backgroundColor: 'transparent',
@@ -181,24 +177,19 @@ const styles = StyleSheet.create({
         color: '#EFFBF8',
         fontSize: 25,
         fontFamily: 'bign-font',
-
     },
     user2: {
         color: '#EFFBF8',
         fontSize: 25,
-        
     },
     clave1: {
         color: '#EFFBF8',
         fontSize: 25,
         fontFamily: 'bign-font',
-
     },
     clave2: {
         color: '#EFFBF8',
         fontSize: 25,
-
-
     },
     btn: {
         marginTop: '15%',
@@ -206,7 +197,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#F2D0A7',
         width: '50%',
         justifyContent: 'center',
-
     },
     btn2: {
         marginTop: '5%',
@@ -214,7 +204,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#BF9D7E',
         width: '50%',
         justifyContent: 'center',
-
     },
     txt: {
         color: 'black',
@@ -223,7 +212,6 @@ const styles = StyleSheet.create({
     textoBlanco: {
         color: '#ffffff'
     }
-
 });
 
 

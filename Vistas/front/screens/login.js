@@ -79,7 +79,7 @@ export default class Login extends Component {
                             <Text style={styles.bingo1}>
                             BINGO
                              </Text>
-                        ) : (<Text style={styles.bingo2}>Loading...</Text>)
+                        ) : (<Text style={styles.bingo2}>Loadin...</Text>)
                         }
             
                     <Card style={styles.cardMom}>
