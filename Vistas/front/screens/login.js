@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import * as Font from 'expo-font';
-import { StyleSheet, ImageBackground, Text, RecyclerViewBackedScrollView } from 'react-native';
+import { StyleSheet, ImageBackground, Text, AsyncStorage } from 'react-native';
 import { Container, Content, Card, CardItem, Body, Item, Label, Input, Button, Spinner  } from 'native-base';
 
-const API_URL = "http://192.168.100.12:8001/server/login";
+const API_URL = "http://192.168.100.5:8001/server/login";
 
 export default class Login extends Component {
 
@@ -32,6 +32,15 @@ export default class Login extends Component {
         })
     }
 
+    localStoragge = async () => {
+        try{
+            await AsyncStorage.setItem('User', this.state.usuario);
+        }
+        catch(error){
+            console.log(error);
+        }
+    }
+
     login = () => {
 
         const header = {
@@ -50,7 +59,7 @@ export default class Login extends Component {
             .then((response) => response.json())
             .then((responseJson) => {
                 if(responseJson.mensaje != 'inc'){
-
+                    this.localStoragge();
                     return this.props.navigation.push('Inicio')
                 }
                 return alert('Datos incorrectos')

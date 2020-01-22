@@ -1,20 +1,19 @@
 import React, { Component } from 'react';
-import { Image, Modal, Text, TouchableHighlight, View, Alert, TextInput, FlatList, StyleSheet, ImageBackground } from 'react-native';
+import { Image, Modal, Text, TouchableHighlight, View, Alert, TextInput, FlatList, StyleSheet, ImageBackground, AsyncStorage } from 'react-native';
 import {  Container, Header, Title, Button, Left, Right, Body, Icon, Spinner, Fab, Form   } from 'native-base';
 import { Table, Row, Rows } from 'react-native-table-component';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import {faCoffee } from '@fortawesome/free-solid-svg-icons';
 
 
-
-const API_URL = "http://192.168.100.12:8001/server/bingo/cartillas";
-const API_URL_Start = "http://192.168.100.12:8001/server/bingo/jugar";
+const API_URL = "http://192.168.100.5:8001/server/bingo/cartillas";
+const API_URL_Start = "http://192.168.100.5:8001/server/bingo/jugar";
 
 export default class Home extends Component{
     constructor(props) {
         super(props);
-        
+        this.localStoragge();
+        this.cargarTabla();
         this.state = {
+          usuario: '',
           tableHead: ['B','I','N','G','O'],
           tableData: [],
           numerosTemporales: [],
@@ -23,7 +22,6 @@ export default class Home extends Component{
           status: false,
           numeroBola: 'Jugar',
         }
-        this.cargarTabla();
     }
 
     estadoFila1 = false;
@@ -57,6 +55,15 @@ export default class Home extends Component{
 
     }
 
+    localStoragge = async () =>{
+        try{
+             this.state.usuario = await AsyncStorage.getItem('User');
+        }
+        catch(error){
+            console.log(error)
+        }
+    }
+
     jugar = () => {
             const header = {
                 method: 'GET',
@@ -77,7 +84,6 @@ export default class Home extends Component{
                 })
         
     }
-
 
     cargarTabla = ()=>{
 
@@ -198,11 +204,35 @@ export default class Home extends Component{
         })
     }
 
+    singOut = async () => {
+        try{
+            await AsyncStorage.clear();
+            this.props.navigation.push('Inicio');
+        }
+        catch(error){
+            console.log(error);
+        }
+    }
+
     render() {
         return (    
             <View >
                 <ImageBackground source={require('../assets/picks/bingo.png')} style={styles.imagen}>
-                    <Header style={{backgroundColor: '#20575783'}}>
+                <Header noShadow style={{backgroundColor: '#20575783', paddingTop: 15}}>
+                    <Left>
+                        <Button transparent style={{width: '100%'}}>
+                            <Icon name="person"/>
+                            <Text style={styles.textoBlanco}>   {this.state.usuario}</Text>
+                        </Button>
+                    </Left>
+                    <Right>
+                        <Button transparent onPress={this.singOut}>
+                            <Text style={styles.textoBlanco}>Cerrar Sesión </Text>
+                            <Icon name="exit" />
+                        </Button>
+                    </Right>
+                </Header>
+                    {/*<Header style={{backgroundColor: '#20575783'}}>
                         <Left>
                             <Button transparent onPress={() => {this.props.navigation.push('Login') }}>
                                 <Text>Regresar</Text>
@@ -216,7 +246,7 @@ export default class Home extends Component{
                                 <Icon name='search' />
                             </Button>
                         </Right>
-                    </Header>
+                    </Header>*/}
 
                     <View>
                         <View style={styles.container_principal}>
@@ -243,7 +273,7 @@ export default class Home extends Component{
 
                     
                     <Fab position="bottomLeft" style={{backgroundColor: 'white' }} onPress={() => { this.setModalVisible(!this.state.modalVisible)}}>
-                        <Image source={require('../assets/icons8.png')} style={{height: '80%', width: '80%'}}/>
+                        <Icon name="list" style={{color: '#013440'}}/>
                      </Fab>
                     
                 </ImageBackground>
