@@ -15,7 +15,7 @@
     "@fortawesome/react-native-fontawesome": "^0.2.0",
     "eslint-config-prettier": "^6.9.0",
     "eslint-plugin-prettier": "^3.1.2",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "knex": "^0.20.7",
     "pg": "^7.17.0",
     "prettier": "^1.19.1",
